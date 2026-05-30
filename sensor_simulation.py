@@ -1,25 +1,3 @@
-"""
-╔══════════════════════════════════════════════════════════════╗
-║          IoT Multi-Sensor Data Simulation Engine             ║
-║              Task 2 — Decodelabs IoT Internship              ║
-╚══════════════════════════════════════════════════════════════╝
-
-Simulates a full smart-environment sensor suite:
-  • 🌡  Temperature & Humidity  (DHT22 model)
-  • 💡  Light Level             (LDR model)
-  • 🚶  Motion Detection        (PIR model)
-  • 🌬  Air Quality / CO₂       (MQ-135 model)
-  • 📳  Vibration / Shock       (SW-420 model)
-
-Features:
-  - Realistic sensor drift and noise models
-  - Terminal live-view with coloured status bars
-  - Rolling statistics (min / max / avg) per sensor
-  - CSV data export for analysis
-  - Simulated day/night cycle affecting light & temperature
-  - Configurable runtime and sampling rate
-"""
-
 import time
 import random
 import math
@@ -30,17 +8,11 @@ from datetime import datetime
 from collections import deque
 from enum import Enum
 
-# ──────────────────────────────────────────────────────────────
-# Config
-# ──────────────────────────────────────────────────────────────
 SAMPLING_INTERVAL = 1.5   # seconds between readings
 SYSTEM_RUNTIME    = 90    # total seconds to run (set to 0 for infinite)
 CSV_FILE          = "sensor_data.csv"
 HISTORY_LEN       = 50    # rolling stats window
 
-# ──────────────────────────────────────────────────────────────
-# ANSI helpers
-# ──────────────────────────────────────────────────────────────
 class C:
     R  = "\033[0m"
     B  = "\033[1m"
@@ -72,9 +44,6 @@ def status_color(level):
         "OFFLINE":  C.D,
     }.get(level, C.WH)
 
-# ──────────────────────────────────────────────────────────────
-# Day/Night Cycle  (affects light sensor + temperature drift)
-# ──────────────────────────────────────────────────────────────
 class DayNightCycle:
     """
     Simulates a compressed day/night cycle.
@@ -102,10 +71,6 @@ class DayNightCycle:
         elif frac < 0.75:  return "🌇 Dusk"
         else:              return "🌑 Night"
 
-
-# ──────────────────────────────────────────────────────────────
-# Sensor Base
-# ──────────────────────────────────────────────────────────────
 class SensorReading:
     def __init__(self, name, value, unit, status, raw_dict=None):
         self.name      = name
@@ -133,11 +98,6 @@ class BaseSensor:
             return None, None, None
         h = list(self._history)
         return min(h), max(h), sum(h) / len(h)
-
-
-# ──────────────────────────────────────────────────────────────
-# Sensor Implementations
-# ──────────────────────────────────────────────────────────────
 
 class DHT22Sensor(BaseSensor):
     """Temperature & Humidity — realistic Gaussian noise + drift."""
@@ -272,10 +232,6 @@ class SW420Sensor(BaseSensor):
             raw_dict={"magnitude_g": magnitude, "shock_event": event}
         )
 
-
-# ──────────────────────────────────────────────────────────────
-# CSV Logger
-# ──────────────────────────────────────────────────────────────
 _log_initialized = False
 
 def log_to_csv(readings: list[SensorReading]):
@@ -317,10 +273,6 @@ def log_to_csv(readings: list[SensorReading]):
             row.get("SW420_status", ""),
         ])
 
-
-# ──────────────────────────────────────────────────────────────
-# Terminal Display
-# ──────────────────────────────────────────────────────────────
 def render_dashboard(readings: list[SensorReading],
                      cycle: DayNightCycle,
                      sensors: list[BaseSensor],
@@ -378,10 +330,6 @@ def render_dashboard(readings: list[SensorReading],
     print(f"\n  {C.D}Logging to: {os.path.abspath(CSV_FILE)}{C.R}")
     print(f"  {C.D}Press Ctrl+C to stop.{C.R}")
 
-
-# ──────────────────────────────────────────────────────────────
-# Summary Report
-# ──────────────────────────────────────────────────────────────
 def print_summary(sensors: list[BaseSensor], sample_count: int):
     print(f"\n{C.CY}{C.B}{'═'*60}{C.R}")
     print(f"{C.CY}{C.B}  SIMULATION SUMMARY{C.R}")
@@ -395,10 +343,6 @@ def print_summary(sensors: list[BaseSensor], sample_count: int):
             print(f"    {s.name:25s}  min={mn:.2f}  max={mx:.2f}  avg={avg:.2f}")
     print(f"{C.CY}{'═'*60}{C.R}\n")
 
-
-# ──────────────────────────────────────────────────────────────
-# Main
-# ──────────────────────────────────────────────────────────────
 def main():
     sensors = [
         DHT22Sensor("dht22-01", "DHT22 Temp/Humid"),
