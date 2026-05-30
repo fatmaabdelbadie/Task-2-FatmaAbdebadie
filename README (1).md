@@ -1,24 +1,13 @@
-# 📟 IoT Multi-Sensor Data Simulation Engine
+#  IoT Multi-Sensor Data Simulation Engine
 
 > **Decodelabs IoT Internship — Task 2**
 
 A realistic, physics-inspired IoT sensor simulation engine that models **5 different sensor types** with authentic noise, drift, and environmental coupling — all visualised in a live coloured terminal dashboard with CSV data export.
 
----
-
-## ✨ What Makes This Unique
-
-Most sensor simulations use `random.randint()`. This one doesn't:
-
-- **DHT22**: Gaussian noise + slow drift + temperature-humidity inverse correlation
-- **LDR**: Follows a compressed day/night sine-wave cycle with random cloud flicker events
-- **PIR**: Bernoulli detection probability increases during simulated daytime
-- **MQ135**: Gradual indoor CO₂ accumulation model with random ventilation events
-- **SW420**: Impulse-based vibration model with shock detection threshold
 
 ---
 
-## 🗂️ Project Structure
+##  Project Structure
 
 ```
 task2_sensor_simulation/
@@ -31,7 +20,7 @@ task2_sensor_simulation/
 
 ---
 
-## 🌡️ Sensors Simulated
+##  Sensors Simulated
 
 | Sensor | Model | Measures | Unit | Alert Threshold |
 |--------|-------|----------|------|-----------------|
@@ -43,7 +32,6 @@ task2_sensor_simulation/
 
 ---
 
-## 🚀 Getting Started
 
 ### No installation needed!
 
@@ -60,7 +48,7 @@ CSV_FILE          = "sensor_data.csv"
 
 ---
 
-## 📸 Sample Terminal Output
+##  Sample Terminal Output
 
 ```
 ╔══════════════════════════════════════════════════════════════╗
@@ -88,7 +76,7 @@ CSV_FILE          = "sensor_data.csv"
 
 ---
 
-## 📊 CSV Log Format
+##  CSV Log Format
 
 `sensor_data.csv` is created automatically with one row per sample:
 
@@ -108,7 +96,7 @@ CSV_FILE          = "sensor_data.csv"
 
 ---
 
-## 🔑 Key IoT Concepts Demonstrated
+##  Key IoT Concepts Demonstrated
 
 | Concept | Implementation |
 |---------|---------------|
@@ -122,7 +110,7 @@ CSV_FILE          = "sensor_data.csv"
 
 ---
 
-## 📦 Requirements
+##  Requirements
 
 ```
 Python >= 3.10  (standard library only — nothing to install)
@@ -130,6 +118,6 @@ Python >= 3.10  (standard library only — nothing to install)
 
 ---
 
-## 👤 Author
-
+##  Author
+Fatma Abdelbadie
 Decodelabs IoT Internship Project
